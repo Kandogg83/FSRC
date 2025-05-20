@@ -4,14 +4,21 @@ class ModInfo:
     def __init__(self, mod):
         self.name = mod["name"]
         self.mod_info_web = requests.get(rf"https://mods.factorio.com/api/mods/{self.name}").json()
-        self.latest_release_version = "0.0.0"
-        self.latest_release_info = None
-        self.download_url = None
+
         self.installed_version = mod["version"]
         self.installed_version_filename = f"{self.name}_{self.installed_version}.zip"
+        self.latest_release_info = None
+        self.download_url = None
+
+        self.latest_version = self._get_latest_version()
+        self.latest_version_filename = f"{self.name}_{self.latest_version}.zip"
+
+
+    def _get_latest_version(self):
         for release in self.mod_info_web["releases"]:
 
-            self.latest_release_version = compare_mod_versions(self.latest_release_version, release["version"])
-            if self.latest_release_version == release["version"]:
+            highest_version = compare_mod_versions(self.installed_version, release["version"])
+            if highest_version == release["version"]:
                 self.latest_release_info = release
                 self.download_url = release["download_url"]
+        return highest_version

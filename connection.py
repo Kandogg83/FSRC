@@ -1,13 +1,21 @@
 import winrm
-import getpass
+from  pathlib import Path
+from config import CONFIG
+import warnings
+
+# Nur winrm warnings filtern ##
+warnings.filterwarnings(
+    "ignore",
+    message="There was a problem converting the Powershell error message.*",
+    module="winrm"
+)
 
 class ServerConnection:
     def __init__(self):
         self.server_ip = "25.51.120.99"
-        #password = getpass.getpass("Password:", stream=None)
-        password = input("Enter password: ")
-        self.auth = ("ServerAdmin", password)
-        self.factorio_mod_dir = r"c:\Games\factorio\mods"
+        self.auth = (CONFIG["server_user"], CONFIG["server_password"])
+        self.mod_dir = Path(r"c:\Games\factorio\mods")
+        self.game_dir = Path(r"c:\Games\factorio")
 
         self.session = self.connect_to_server()
 
