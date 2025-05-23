@@ -28,5 +28,5 @@ This project includes third-party libraries which are subject to their own licen
 
 - mcrcon: zlib License (https://github.com/Tiiffi/mcrcon/blob/master/LICENSE)
 - pypsrp: MIT License (https://github.com/jborean93/pypsrp/blob/master/LICENSE)
-- requests: Apache 2.0 License (https://github.com/psf/requests/blob/main/LICENSE)
+- requests: Apache 2.0 License (https://github.com/psf/requests/blob/main/LICENSE)  // Requests  Copyright 2019 Kenneth Reitz
 - pywinrm: MIT License (https://github.com/diyan/pywinrm/blob/master/LICENSE)
