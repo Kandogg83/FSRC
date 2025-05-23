@@ -1,5 +1,7 @@
 # CHANGELOG FSRC
 
+---
+
 ## [1.01] - 2025-05-23
 ### Fixed / Added
 - Logging: Fixed path issue for the log file (using get_local_path)
