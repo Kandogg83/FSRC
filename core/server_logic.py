@@ -1,17 +1,21 @@
 import argparse
 from pathlib import Path
 from time import sleep
+from turtledemo.sorting_animate import partition
+
 from .config import CONFIG, get_local_path
 from .connection import ServerConnection
 from .factoriomodupdater import FactorioModUpdater
 import logging
 from mcrcon import MCRcon
 from .helpers import run_local_ps_script
+import re
 
 
 class ServerManager:
     def __init__(self, use_server=False):
         self.start_logging()
+
         if use_server:
             self.connection = ServerConnection()
         else:
@@ -19,6 +23,7 @@ class ServerManager:
 
         self.run_script = self._get_run_script()
         self.game_dir =  self._get_game_dir()
+        self.mod_handler = FactorioModUpdater(connection=self.connection)
         self.update_in_progress = False
 
 
@@ -61,7 +66,7 @@ class ServerManager:
 
     def send_rcon(self, cmd):
         with MCRcon(CONFIG["server_ip"], CONFIG["rcon_password"], port=27015) as mcr:
-            mcr.command(cmd)
+            return mcr.command(cmd)
 
     def web_check_server_online(self):
         if self.check_server_online():
@@ -71,9 +76,11 @@ class ServerManager:
         else:
             return False
 
-    def get_player_count(self):
-        cmd = "/players c"
-        return self.send_rcon(cmd)
+    def get_online_players(self):
+        cmd = "/players online"
+        players = self.send_rcon(cmd)
+        actual_list = re.findall(r"^\s*(\w+)\s+\(online\)", players, re.MULTILINE)
+        return actual_list
 
 
     def warn_shutdown(self, minutes:int):

@@ -5,15 +5,14 @@ from urllib.parse import urlencode
 import logging
 from .config import CONFIG
 
-
-
 class FactorioModUpdater:
     def __init__(self, connection):
 
         self.connection = connection
         self.mod_dir = self._get_mod_directory()
         self.run_script = self._get_run_script()
-
+        self.mod_list = create_list_of_installed_mods(self.mod_dir, self.connection)
+        print(self.mod_list)
     def _get_mod_directory(self):
         if self.connection:
             return self.connection.mod_dir

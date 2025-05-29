@@ -26,7 +26,7 @@ function setServerStatus(isOnline) {
     }
 }
 
-async function fetchServerStatus() {
+async function fetchServerInfo() {
     try {
         const response = await fetch("api/server-status", {method: "GET"});
         if (!response.ok) {
@@ -34,20 +34,44 @@ async function fetchServerStatus() {
         }
         const data = await response.json();
         setServerStatus(data.server_online);
+        populate_players(data.player);
     } catch(error) {
         console.error("Fetch error:", error);
         setServerStatus(false);
     }
-
 }
 
 function startPolling(interval) {
-    fetchServerStatus().then(() => {
-        setInterval(fetchServerStatus, interval);
+    fetchServerInfo().then(() => {
+        setInterval(fetchServerInfo, interval);
     })
 }
 
+function populate_players(players) {
+    const players_online = document.getElementById("players-online");
+    players_online.innerHTML = "";
+    if (players.length > 0) {
+
+        for (const player of players) {
+            const span = document.createElement("span");
+            span.textContent = player;
+            players_online.appendChild(span);
+        }
+    }else{
+        const span = document.createElement("span");
+        span.textContent = "No one online";
+        players_online.appendChild(span);
+    }
+}
+
+function populate_mods() {
+    const mods_container = document.getElementById("mods-container");
+    mods_container.innerHTML = "";
+}
+
+
 
 window.onload = function(){
-    startPolling(5000)
+startPolling(5000)
 }
+

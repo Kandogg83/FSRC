@@ -30,6 +30,12 @@
       background-color: #444;
     }
 
+    .players-container {
+        text-align: center;
+        margin: 20px;
+        display: block;
+    }
+
     .status-container {
       text-align: center;
       margin: 20px 0;
@@ -73,7 +79,15 @@
       padding: 10px;
       height: 300px;
       font-size: 14px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
     }
+
+      .mod {
+          display:block;
+          margin: 5px;
+      }
 
       .mod-table td {
       padding-top: 5px;
