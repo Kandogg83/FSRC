@@ -1,15 +1,11 @@
 # CHANGELOG FSRC
 
-## [1.01] - 2025-05-23
-### Fixed / Added
-- Logging: Fixed path issue for the log file (using get_local_path)
-- Mod Path: Fixed wrong path handling for absolute paths in config.json ["mod_dir"]
-- Minor bug fixes and stability improvements
-- ICO for the .exe
-- Added CHANGELOG.txt
+## [v1.0.1] - 2025-05-29
+### Fixed
+-   Bugfix: Removed hard coded args
 
 
-## [1.00] - 2025-05-20
+## [v1.0.0] - 2025-05-29
 ### Added
 - Initial release of the EXE (fsrc.exe)
 - Basic server start, shutdown, and update functions
