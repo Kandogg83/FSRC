@@ -138,7 +138,7 @@ def main():
     #args.start = True
     #args.warn = 1
     #args.shutdown = True
-    args.update = True
+    #args.update = True
 
     #############################
 
