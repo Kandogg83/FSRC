@@ -1,0 +1,80 @@
+ body {
+      background-color: #1e1e1e;
+      color: #f4a300;
+      font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #f4a300;
+    }
+
+    .controls {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .btn {
+      background-color: #333;
+      border: 2px solid #f4a300;
+      color: #f4a300;
+      padding: 10px 20px;
+      margin: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #444;
+    }
+
+    .status-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-left: 10px;
+      vertical-align: middle;
+    }
+
+    .status-online {
+        background-color: limegreen;
+    }
+
+    .status-update {
+        background-color: yellow;
+    }
+
+    .status-offline {
+        background-color: red;
+    }
+
+    .log-container {
+      margin-top: 20px;
+      background-color: #111;
+      border: 1px solid #555;
+      padding: 10px;
+      height: 300px;
+      overflow-y: scroll;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+
+      .mod-container {
+      background-color: #111;
+      border: 1px solid #555;
+      padding: 10px;
+      height: 300px;
+      font-size: 14px;
+    }
+
+      .mod-table td {
+      padding-top: 5px;
+    }

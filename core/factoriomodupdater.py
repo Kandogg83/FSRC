@@ -1,10 +1,9 @@
-from connection import ServerConnection
-from modinfo import ModInfo
+from .modinfo import ModInfo
 from pathlib import Path
-from helpers import create_list_of_installed_mods,run_local_ps_script
+from .helpers import create_list_of_installed_mods,run_local_ps_script
 from urllib.parse import urlencode
 import logging
-from config import CONFIG
+from .config import CONFIG
 
 
 

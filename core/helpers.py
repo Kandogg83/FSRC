@@ -1,4 +1,3 @@
-import json
 import subprocess
 
 def compare_mod_versions(number1: str, number2: str):

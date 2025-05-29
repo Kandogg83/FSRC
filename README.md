@@ -102,7 +102,7 @@ You can build the executable with PyInstaller:
 ---
 
 ````bash
-pyinstaller --onefile --icon=resources/fsrc.ico main.py
+pyinstaller --onefile --icon=resources/fsrc.ico server_logic.py
 ````
 
 ---

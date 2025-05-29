@@ -1,17 +1,17 @@
 import argparse
 from pathlib import Path
 from time import sleep
-from config import CONFIG, get_local_path
-from connection import ServerConnection
-from factoriomodupdater import FactorioModUpdater
+from .config import CONFIG, get_local_path
+from .connection import ServerConnection
+from .factoriomodupdater import FactorioModUpdater
 import logging
 from mcrcon import MCRcon
-from helpers import run_local_ps_script
+from .helpers import run_local_ps_script
 
 
 class ServerManager:
     def __init__(self, use_server=False):
-
+        self.start_logging()
         if use_server:
             self.connection = ServerConnection()
         else:
@@ -19,7 +19,18 @@ class ServerManager:
 
         self.run_script = self._get_run_script()
         self.game_dir =  self._get_game_dir()
+        self.update_in_progress = False
 
+
+    def start_logging(self):
+        log_file = get_local_path(
+            "../fsrc_eventlog.log")
+        logging.basicConfig(format='%(levelname)s: %(asctime)s %(message)s',
+                            datefmt='%d.%m.%y  %H:%M:%S',
+                            level=logging.INFO,
+                            filename=log_file,
+                            encoding='utf-8'
+                            )
 
 
     def _get_run_script(self):
@@ -40,8 +51,7 @@ class ServerManager:
         else:
             return result.stdout.strip()
 
-
-    def _check_server_online(self):
+    def check_server_online(self):
         ps_script = r"get-process -name factorio"
         result = self.run_script(ps_script)
         if bool(self._get_stdout(result)):
@@ -49,13 +59,24 @@ class ServerManager:
         else:
             return False
 
-
     def send_rcon(self, cmd):
         with MCRcon(CONFIG["server_ip"], CONFIG["rcon_password"], port=27015) as mcr:
             mcr.command(cmd)
 
-    def warn_shutdown(self, minutes:int):
+    def web_check_server_online(self):
+        if self.check_server_online():
+            return True
+        elif self.update_in_progress:
+            return "update"
+        else:
+            return False
 
+    def get_player_count(self):
+        cmd = "/players c"
+        return self.send_rcon(cmd)
+
+
+    def warn_shutdown(self, minutes:int):
         color = "red" if minutes <= 5 else "orange"
         warning = f"[color={color}]⚠️ Warning ⚠️ - {minutes} minute{"s" if minutes != 1 else ""} until server shutdown for maintenance[/color]"
         self.send_rcon(warning)
@@ -63,7 +84,7 @@ class ServerManager:
 
 
     def server_shutdown(self):
-        if self._check_server_online():
+        if self.check_server_online():
             shutdown_message = f"[color=red]Shutting down Server. Goodbye[/color]"
             self.send_rcon(shutdown_message)
             sleep(2)
@@ -74,7 +95,7 @@ class ServerManager:
             logging.info(f"Shutdown complete")
 
     def server_start(self):
-        if not self._check_server_online():
+        if not self.check_server_online():
             factorio_path = Path(self.game_dir) / "bin" / "x64" / "factorio.exe"
             settings_path = Path(self.game_dir) / "server-settings.json"
             rcon_args = f"--rcon-password {CONFIG['rcon_password']} --rcon-port 27015"
@@ -86,16 +107,18 @@ class ServerManager:
             self.run_script(ps_script)
 
             sleep(5)
-            if self._check_server_online():
+            if self.check_server_online():
                 logging.info("✅ Factorio Server running.....")
             else:
                 logging.warning("❌ Factorio Server not detected after WMI start")
 
     def run_update(self):
+        print("run_update")
+        self.update_in_progress = True
         self.server_shutdown()
 
         for i in range(30):
-            if not self._check_server_online():
+            if not self.check_server_online():
                 logging.info("Server shut down, continuing update process")
                 break
             sleep(1)
@@ -113,15 +136,9 @@ class ServerManager:
         logging.info("🏁 ModUpater closing...")
         sleep(5)
         self.server_start()
-
+        self.update_in_progress = False
 def main():
-    log_file = get_local_path("fsrc_eventlog.log")
-    logging.basicConfig(format='%(levelname)s: %(asctime)s %(message)s',
-                        datefmt='%d.%m.%y  %H:%M:%S',
-                        level=logging.INFO,
-                        filename=log_file,
-                        encoding='utf-8'
-                        )
+
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--warn", type=int, help="Send specified interval Warning in minutes")
@@ -134,7 +151,7 @@ def main():
 
     #############################
     # for easy testing
-    #args.rc = True
+    args.rc = True
     #args.start = True
     #args.warn = 1
     #args.shutdown = True

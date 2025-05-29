@@ -8,7 +8,7 @@ def get_local_path(filename):
     else:
         return Path(__file__).resolve().parent / filename
 
-CONFIG_PATH = get_local_path("config.json")
+CONFIG_PATH = get_local_path("../config.json")
 
 with open(CONFIG_PATH, "r", encoding="utf-8") as f:
     config_import = json.load(f)
