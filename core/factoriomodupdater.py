@@ -5,14 +5,21 @@ from urllib.parse import urlencode
 import logging
 from .config import CONFIG
 
+
 class FactorioModUpdater:
     def __init__(self, connection):
-
+        self.event_logger = logging.getLogger("server_logic")
         self.connection = connection
         self.mod_dir = self._get_mod_directory()
         self.run_script = self._get_run_script()
-        self.mod_list = create_list_of_installed_mods(self.mod_dir, self.connection)
-        print(self.mod_list)
+        self._mod_list = create_list_of_installed_mods(self.mod_dir, self.connection)
+
+
+    @property
+    def mod_list(self):
+        return create_list_of_installed_mods(self.mod_dir, self.connection)
+
+
     def _get_mod_directory(self):
         if self.connection:
             return self.connection.mod_dir
@@ -32,20 +39,21 @@ class FactorioModUpdater:
         else:
             return data.returncode
 
-    def check_for_updates(self):
+    def check_for_updates(self, socket):
 
         updated_mods = []
-        mod_list = create_list_of_installed_mods(self.mod_dir, self.connection)
-        for mod in mod_list:
+        for mod in self.mod_list:
             mod_info = ModInfo(mod)
             mod_info.installed_version = mod["version"]
             if not mod["version"] >= mod_info.latest_version:
 
-                logging.info(f"Downloading new Version for mod: {mod_info.name}")
+                self.event_logger.info(f"Downloading new Version for mod: {mod_info.name}")
                 updated = self.download_mod(mod_info)
                 if updated:
-                    logging.info(f"Mod {mod_info.name} has been updated to Version {mod_info.latest_version}")
+                    self.event_logger.info(f"Mod {mod_info.name} has been updated to Version {mod_info.latest_version}")
                     updated_mods.append(updated)
+                    if socket:
+                        socket.emit("mod_list", {"mod_list": self.mod_list})
         return updated_mods
 
     def download_mod(self, mod_info):
@@ -61,7 +69,7 @@ class FactorioModUpdater:
             else:
                 return None
         else:
-            logging.warning(f"Download failed for mod: {mod_info.name}")
+            self.event_logger.warning(f"Download failed for mod: {mod_info.name}")
             return None
 
     def delete_mod(self,mod_info):

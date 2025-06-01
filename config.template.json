@@ -8,5 +8,6 @@
   "base_mod_url": "https://mods.factorio.com",
   "api_endpoint": "https://mods.factorio.com/api/mods",
   "server_user": "<SERVER_USERNAME>",
-  "server_password": "<SERVER_PASSWORT>"
+  "server_password": "<SERVER_PASSWORT>",
+  "socket_secret": "<SOCKET_SECRET>"
 }

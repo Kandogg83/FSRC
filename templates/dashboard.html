@@ -1,49 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <link rel="icon" href="{{ url_for('static', filename='fsrc.ico') }}">
-  <link rel="stylesheet"  href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <title>FSRC Control Panel</title>
 
 </head>
 <body>
-  <h1>Factorio Server Remote Control (FSRC)</h1>
+<h1>Factorio Server Remote Control (FSRC)</h1>
 
-  <div class="controls">
-    <button class="btn" onclick="startServer()">Start Server</button>
-    <button onclick="shutdownServer()" class="btn">Shutdown Server</button>
-    <button onclick="updateServer()" class="btn">Update Mods</button>
+<div class="controls">
+  <button class="btn" onclick="startServer()">Start Server</button>
+  <button onclick="shutdownServer()" class="btn">Shutdown Server</button>
+  <button onclick="updateServer()" class="btn">Update Mods</button>
+</div>
+
+<div class="status-container">
+  Server Status:
+  <span id="status-indicator" class="status-indicator"></span>
+  <span id="status-text"></span>
+
+  <div id="players-container" class="players-container">
+    Online Players:
+    <span id="players-online" class="players-online"></span>
   </div>
+</div>
 
-  <div class="status-container">
-    Server Status:
-    <span id="status-indicator" class="status-indicator"></span>
-    <span id="status-text"></span>
-
-    <div id="players-container" class="players-container">
-      Online Player:
-      <span id="players-online" class="players-online"></span>
-    </div>
-  </div>
-
-   <div class="mod-container" id="mod-list">
-      <!--  Mod List goes here -->
-
-       <span class="mod">Helmod_1.0.1</span>
-       <span class="mod">SqueakThrough1.6.2</span>
-       <span class="mod">Assembly2.1.4</span>
-       <span class="mod">FarReach0.5.1</span>
-
-  </div>
-
-  <div class="log-container" id="log-output">
-    <!-- Log output goes here -->
-    [INFO] 21.05.25  10:12:00 Server started successfully.
-    [INFO] 21.05.25  10:13:15 Mod update check completed.
-    [WARN] 21.05.25  10:45:00 Scheduled shutdown in 5 minutes.
-  </div>
-
-<script src= "{{ url_for('static', filename='js/scripts.js') }}"></script>
+<div class="mod-container" id="mod-list"></div>
+<div class="log-container" id="log-output"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
 </html>

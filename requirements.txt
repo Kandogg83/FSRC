@@ -2,4 +2,4 @@ mcrcon~=0.7.0
 requests~=2.32.3
 pywinrm==0.5.0
 Flask~=3.1.1
-MarkupSafe~=3.0.2
+Flask-SocketIO~=5.5.1

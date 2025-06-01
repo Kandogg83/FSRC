@@ -1,3 +1,36 @@
+const socket = io();
+
+socket.on("connect", () => {
+    console.log("Connected! to Socket...");
+})
+
+socket.on("log_entry", (data) => {
+    const container = document.getElementById("log-output");
+    if (data.new === true) {
+        container.innerHTML = ""
+    }
+    container.innerHTML += data.log
+    container.scrollTop = container.scrollHeight;
+
+})
+
+socket.on("mod_list", (data) => {
+    console.log(data.mod_list);
+    const mods_container = document.getElementById("mod-list");
+    mods_container.innerHTML = "";
+    for (const mod of data.mod_list) {
+        const div = document.createElement("div");
+        div.className = "mod"
+        console.log(mod)
+        div.innerHTML = mod.name + "<span class='mod-underscore'>_</span>" + "<span class='mod-version'>" + mod.version + "</span>";
+        mods_container.appendChild(div);
+    }
+})
+
+socket.emit("mod_list")
+socket.emit("log_entry")
+
+
 function shutdownServer() {
     fetch("/shutdown-server", {method: "POST"})
 }
@@ -59,19 +92,12 @@ function populate_players(players) {
         }
     }else{
         const span = document.createElement("span");
-        span.textContent = "No one online";
+        span.textContent = "Nobody online";
         players_online.appendChild(span);
     }
 }
 
-function populate_mods() {
-    const mods_container = document.getElementById("mods-container");
-    mods_container.innerHTML = "";
-}
-
-
-
 window.onload = function(){
-startPolling(5000)
+    startPolling(5000)
 }
 
