@@ -125,10 +125,8 @@ pip install -r requirements.txt
 You can build the standalone executable using PyInstaller:
 
 ```bash
-python -m PyInstaller --onefile --icon=static/fsrc.ico core/logic.py
+python -m PyInstaller --onefile --name fsrc.exe --icon=static/fsrc.ico core/logic.py
 ```
-
----
 
 ## Third-Party Libraries and Licenses
 
