@@ -10,6 +10,9 @@ config.json
 
 dist/
 build/
+build-web
+build-zip
+
 *.spec
 
 __pycache__/
@@ -18,3 +21,4 @@ __pycache__/
 
 *.bak
 *.swp
+
