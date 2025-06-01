@@ -1,6 +1,16 @@
 # CHANGELOG FSRC
 
 ---
+## [1.1] - 2025-06.01
+### Added / Changed / Improved
+- introduced web ui
+  - buttons for start-server, stop-server and update-mods
+  - automatically refreshing eventlog on dashboard
+  - list of mods with versions on dashboard
+- enhanced logging in seperate files (webserver backend and gameserver)
+- restructured filebase
+- introduced builder for webui deployment
+
 
 ## [1.01] - 2025-05-23
 ### Fixed / Added

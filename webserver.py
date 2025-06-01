@@ -1,7 +1,10 @@
+from gevent import monkey
+monkey.patch_all()
+
 from flask import Flask, render_template, jsonify
+from flask_socketio import SocketIO
 from core.servermanager import server_manager
 from core.helpers import get_local_path
-from flask_socketio import SocketIO
 from core.config import CONFIG
 import logging
 import time
@@ -81,4 +84,4 @@ new_thread = Thread(target=check_log_for_updates, daemon=True)
 new_thread.start()
 
 if __name__ == "__main__":
-   socketio.run(app, debug=True, allow_unsafe_werkzeug=True)
+   socketio.run(app, host="0.0.0.0", port=5000)
