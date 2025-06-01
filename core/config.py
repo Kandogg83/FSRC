@@ -1,7 +1,6 @@
 import json
-import sys
 from pathlib import Path
-from .helpers import get_local_path
+from core.helpers import get_local_path
 
 
 CONFIG_PATH = get_local_path("../config.json")

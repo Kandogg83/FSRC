@@ -1,5 +1,5 @@
 from mcrcon import MCRcon
-from .config import CONFIG
+from core.config import CONFIG
 import time
 import logging
 import atexit

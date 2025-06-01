@@ -1,5 +1,5 @@
 import argparse
-from .servermanager import server_manager
+from core.servermanager import server_manager
 
 def main():
 
@@ -24,7 +24,6 @@ def main():
     #############################
 
     manager = server_manager
-    manager.use_server_connection()
 
     if args.warn:
         manager.warn_shutdown(args.warn)
@@ -34,6 +33,8 @@ def main():
         manager.server_start()
     if args.update:
         manager.run_update()
+    if  args.rc:
+        manager.use_server_connection()
 
 if __name__ == "__main__":
     main()

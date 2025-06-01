@@ -1,6 +1,6 @@
 import winrm
 from  pathlib import Path
-from .config import CONFIG
+from core.config import CONFIG
 import warnings
 
 # Nur winrm warnings filtern ##

@@ -78,7 +78,7 @@ def copy_items():
 
 def create_zipfile():
     zip_folder = root / "build-zip"
-    zip_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + ".zip"
+    zip_name = datetime.now().strftime("%Y-%m-%d-%H-%M-%S") + "webui.zip"
     zip_file  = zip_folder / zip_name
     zip_folder.mkdir(exist_ok=True)
 

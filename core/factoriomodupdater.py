@@ -1,9 +1,9 @@
-from .modinfo import ModInfo
+from core.modinfo import ModInfo
 from pathlib import Path
-from .helpers import create_list_of_installed_mods,run_local_ps_script
+from core.helpers import create_list_of_installed_mods,run_local_ps_script
 from urllib.parse import urlencode
 import logging
-from .config import CONFIG
+from core.config import CONFIG
 
 
 class FactorioModUpdater:

@@ -1,12 +1,12 @@
 from pathlib import Path
 from time import sleep
-from .config import CONFIG
-from .connection import ServerConnection
-from .factoriomodupdater import FactorioModUpdater
-from .customlogger import ScriptLogger
-from .custommcrcon import rcon_client
+from core.config import CONFIG
+from core.connection import ServerConnection
+from core.factoriomodupdater import FactorioModUpdater
+from core.customlogger import ScriptLogger
+from core.custommcrcon import rcon_client
 import logging
-from .helpers import run_local_ps_script
+from core.helpers import run_local_ps_script
 import re
 
 

@@ -1,4 +1,4 @@
-from .helpers import get_local_path
+from core.helpers import get_local_path
 import logging
 
 
