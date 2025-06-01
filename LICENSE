@@ -1,3 +1,5 @@
+This project also includes third-party libraries under their respective licenses.
+
 MIT License
 
 Copyright (c) 2025 Kando
@@ -28,5 +30,8 @@ This project includes third-party libraries which are subject to their own licen
 
 - mcrcon: zlib License (https://github.com/Tiiffi/mcrcon/blob/master/LICENSE)
 - pypsrp: MIT License (https://github.com/jborean93/pypsrp/blob/master/LICENSE)
-- requests: Apache 2.0 License (https://github.com/psf/requests/blob/main/LICENSE)
+- requests: Apache 2.0 License (https://github.com/psf/requests/blob/main/LICENSE)  // Requests  Copyright 2019 Kenneth Reitz
 - pywinrm: MIT License (https://github.com/diyan/pywinrm/blob/master/LICENSE)
+- flask :  BSD 3-Clause License (https://github.com/pallets/flask) // © 2010 Pallets. All rights reserved
+- flask-socketio: MIT License (https://github.com/miguelgrinberg/flask-socketio)
+- gevent: MIT License (http://www.gevent.org)

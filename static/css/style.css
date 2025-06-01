@@ -1,0 +1,103 @@
+body {
+    background-color: #1e1e1e;
+    color: #f4a300;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #f4a300;
+}
+
+.controls {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn {
+    background-color: #333;
+    border: 2px solid #f4a300;
+    color: #f4a300;
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #444;
+}
+
+.players-container {
+    margin-top: 10px;
+    display: block;
+}
+
+.status-container {
+    text-align: left;
+    margin: 20px 15px;
+}
+
+.status-indicator {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.status-online {
+    background-color: limegreen;
+}
+
+.status-update {
+    background-color: yellow;
+}
+
+.status-offline {
+    background-color: red;
+}
+
+.log-container {
+    margin-top: 20px;
+    background-color: #111;
+    border: 1px solid #555;
+    padding: 10px;
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: auto;
+    font-size: 14px;
+    white-space: pre;
+    scroll-behavior: smooth;
+}
+
+.mod-container {
+    background-color: #111;
+    border: 1px solid #555;
+    padding: 10px;
+    height: 300px;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow-x: auto;
+}
+
+.mod {
+    margin: 5px;
+}
+
+.mod-underscore {
+    color: saddlebrown;
+}
+.mod-version {
+    color: #e47b53;
+}
+
+.mod-table td {
+    padding-top: 5px;
+}

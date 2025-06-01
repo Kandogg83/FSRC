@@ -1,5 +1,6 @@
 import requests
-from helpers import compare_mod_versions
+from .helpers import compare_mod_versions
+
 class ModInfo:
     def __init__(self, mod):
         self.name = mod["name"]

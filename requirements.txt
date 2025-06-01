@@ -1,4 +1,6 @@
-mcrcon
-pypsrp
-requests
+mcrcon~=0.7.0
+requests~=2.32.3
 pywinrm==0.5.0
+Flask~=3.1.1
+Flask-SocketIO~=5.5.1
+gevent~=25.5.1

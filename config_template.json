@@ -1,6 +1,6 @@
 {
   "mod_dir": "AppData/Roaming/Factorio/mods",
-  "game_dir": "G:/SteamLibrary/steamapps/common/Factorio",
+  "game_dir": "X:/SteamLibrary/steamapps/common/Factorio",
   "server_ip": "<IP_ADRESSE>",
   "rcon_password": "<RCON_PASSWORT>",
   "factorio_username": "<FACTORIO_USERNAME>",
@@ -8,5 +8,6 @@
   "base_mod_url": "https://mods.factorio.com",
   "api_endpoint": "https://mods.factorio.com/api/mods",
   "server_user": "<SERVER_USERNAME>",
-  "server_password": "<SERVER_PASSWORT>"
+  "server_password": "<SERVER_PASSWORT>",
+  "socket_secret": "<SOCKET_SECRET>"
 }

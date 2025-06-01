@@ -1,5 +1,6 @@
-import json
 import subprocess
+from pathlib import Path
+import sys
 
 def compare_mod_versions(number1: str, number2: str):
     v1 = list(map(int, number1.split(".")))
@@ -40,6 +41,10 @@ def create_list_of_installed_mods(mod_dir, connection=None):
         return_mod_list.append({"name": temp_list[0], "version": temp_list[1]})
     return return_mod_list
 
-
+def get_local_path(filename):
+    if getattr(sys, 'frozen', False):
+        return Path(sys.executable).parent / filename
+    else:
+        return Path(__file__).resolve().parent / filename
 
 

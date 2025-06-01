@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <link rel="icon" href="{{ url_for('static', filename='fsrc.ico') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <title>FSRC Control Panel</title>
+
+</head>
+<body>
+<h1>Factorio Server Remote Control (FSRC)</h1>
+
+<div class="controls">
+  <button class="btn" onclick="startServer()">Start Server</button>
+  <button onclick="shutdownServer()" class="btn">Shutdown Server</button>
+  <button onclick="updateServer()" class="btn">Update Mods</button>
+</div>
+
+<div class="status-container">
+  Server Status:
+  <span id="status-indicator" class="status-indicator"></span>
+  <span id="status-text"></span>
+
+  <div id="players-container" class="players-container">
+    Online Players:
+    <span id="players-online" class="players-online"></span>
+  </div>
+</div>
+
+<div class="mod-container" id="mod-list"></div>
+<div class="log-container" id="log-output"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</body>
+</html>

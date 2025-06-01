@@ -1,6 +1,7 @@
 # Factorio Server Manager (FSRC)
 
-A Python-based tool to manage your Factorio dedicated server with features like starting, stopping, automaticly updating mods, and sending RCON commands. Supports both local and remote server control.
+A Python-based tool to manage your Factorio dedicated server with features like starting, stopping, automatically updating mods, and sending RCON commands. Supports both local and remote server control.  
+As of 1.1 also includes a Web-UI.
 
 ---
 
@@ -11,6 +12,7 @@ A Python-based tool to manage your Factorio dedicated server with features like 
 - Automatic mod updates from the official Factorio mod portal
 - Remote execution via PowerShell remoting
 - Easy configuration using a JSON file
+- Web-UI with all features from above
 
 ---
 
@@ -19,30 +21,33 @@ A Python-based tool to manage your Factorio dedicated server with features like 
 - Python 3.8+
 - PowerShell (for remote execution)
 - Windows OS (tested on Windows 10/11)
-- [MCRcon](https://github.com/Tiiffi/mcrcon) Python library for RCON commands
 
 ---
 
 ## Installation
 
 1. Clone this repository or download the latest release.
-2. Create and edit your `config.json` with your server settings.
-3. (Optional) Create `.env` file for sensitive credentials or put them directly in `config.json`.
-4. Run locally using Python or use the provided executable (`fsrc.exe`).
+2. Create and edit your `config.json` with your server settings. (`config_template.json` included as guidance)
+3. (Optional) Create a `.env` file for sensitive credentials or put them directly in `config.json`.
+4. Run locally using Python or use the provided executable (`fsrc.exe`).  
+   Entrypoint for standalone: `core/logic.py`
+5. Use `buildforweb.py` for building the Web-UI. Entrypoint for Web-UI: `webserver.py`
 
 ---
 
 ## Usage
 
+### Without UI
+
 Run the executable or script with the following command-line arguments:
 
-| Argument     | Description                                       |
-|--------------|-------------------------------------------------|
-| `--start`    | Start the Factorio server                         |
-| `--shutdown` | Gracefully shutdown the server                    |
-| `--update`   | Update installed mods and restart the server     |
-| `--warn N`   | Send RCON warning messages N minutes before shutdown |
-| `--rc`       | Enable remote server control mode                 |
+| Argument     | Description                                            |
+|--------------|--------------------------------------------------------|
+| `--start`    | Start the Factorio server                              |
+| `--shutdown` | Gracefully shutdown the server                         |
+| `--update`   | Update installed mods and restart the server           |
+| `--warn N`   | Send RCON warning messages N minutes before shutdown   |
+| `--rc`       | Enable remote server control mode                      |
 
 Example:
 
@@ -50,33 +55,48 @@ Example:
 fsrc.exe --start
 fsrc.exe --warn 10
 fsrc.exe --update
-````
+```
+
+### With UI (WebApp)
+
+1. Unzip the included `web-server.zip` on the server
+2. Rename and edit `config_template.json` to `config.json` and fill in your settings as described below
+3. Build a virtual environment, install dependencies, and run `webserver.py`
+4. The Web-UI should now be reachable on its local IP, port 5000
 
 ---
 
 ## Configuration
-Your configuration is stored in config.json. Example:
 
-````bash
+Your configuration is stored in `config.json`. Example:
+
+```json
 {
   "mod_dir": "AppData/Roaming/Factorio/mods",
-  "game_dir": "G:/SteamLibrary/steamapps/common/Factorio", 
-  "server_ip": "192.168.1.100",              <---- needs to be set also in local mode for rcon to work
-  "rcon_password": "your_rcon_password",     <---- will be set at server start and used for sending messages
+  "game_dir": "X:/SteamLibrary/steamapps/common/Factorio",
+  "server_ip": "192.168.1.100",                         needs to be set wether it´s local or not
+  "rcon_password": "your_rcon_password",                choose one
   "factorio_username": "your_username",
   "factorio_token": "your_api_token",
-  "base_mod_url": "https://mods.factorio.com",    <<-- don't change
-  "api_endpoint": "https://mods.factorio.com/api/mods",    <<-- don't change
-  "server_user": "remote_user",              <---- windows user on server (only for --rc)
-  "server_password": "remote_password"       <---- windows password on server (only for --rc)
+  "base_mod_url": "https://mods.factorio.com",          do not change
+  "api_endpoint": "https://mods.factorio.com/api/mods", do not change
+  "server_user": "remote_user",                         <<-- windows-server-user
+  "server_password": "remote_password",                 <<-- windows-server-password
+  "socket_secret": "<SOCKET_SECRET>"                    choose one
 }
-````
+```
+
+> 💡 If `mod_dir` is not in `C:/Users/<your_name>/...`, it must be an absolute path like `X:/factorio/mods`.
+
 ---
 
-## Possible usecase :
+## Example Use Case
 
-- Set up for local use on server
-- start from windows taskplanner with  arguments ( --warn 10, --warn 5, --warn 1, --update )
+Set up for local use on a server, then:
+
+- Start from the Windows Task Scheduler with arguments:
+  - `--warn 10`, `--warn 5`, `--warn 1`, `--update`
+- Or launch the Web-UI for easy remote access
 
 ---
 
@@ -86,24 +106,27 @@ This project requires the following Python packages:
 
 - `mcrcon`
 - `requests`
-- `pypsrp`  <!-- für WinRM-Remoteausführung -->
-- `pywinrm` 
+- `pypsrp`
+- `pywinrm`
+- `flask`
+- `flask-socketio`
+- `gevent`
 
-To install all dependencies, run:
+Install them with:
 
 ```bash
 pip install -r requirements.txt
-````
-For more details about the dependencies and their licenses, see DEPENDENCIES.md.
-
-## Building the Executable
-You can build the executable with PyInstaller:
+```
 
 ---
 
-````bash
-pyinstaller --onefile --icon=resources/fsrc.ico main.py
-````
+## Building the Executable
+
+You can build the standalone executable using PyInstaller:
+
+```bash
+python -m PyInstaller --onefile --icon=static/fsrc.ico core/logic.py
+```
 
 ---
 
@@ -111,35 +134,29 @@ pyinstaller --onefile --icon=resources/fsrc.ico main.py
 
 This project uses the following third-party libraries:
 
-- **mcrcon** — licensed under the *zlib License*  
-  Source: https://github.com/Tiiffi/mcrcon/blob/master/LICENSE
+- **mcrcon** — *zlib License*  
+  https://github.com/Tiiffi/mcrcon/blob/master/LICENSE
 
-- **pypsrp** — licensed under the *MIT License*  
-  Source: https://github.com/jborean93/pypsrp/blob/master/LICENSE
+- **pypsrp** — *MIT License*  
+  https://github.com/jborean93/pypsrp/blob/master/LICENSE
 
-- **requests** — licensed under the *Apache 2.0 License*  
-  Source: https://github.com/psf/requests/blob/main/LICENSE
+- **requests** — *Apache 2.0 License*  
+  https://github.com/psf/requests/blob/main/LICENSE
 
-- **pywinrm** — licensed under the *MIT License*  
-  Source: https://github.com/diyan/pywinrm/blob/master/LICENSE
+- **pywinrm** — *MIT License*  
+  https://github.com/diyan/pywinrm/blob/master/LICENSE
 
----
+- **flask** — *BSD 3-Clause License*  
+  https://github.com/pallets/flask
 
-## Acknowledgments / Third-Party Libraries
-This project uses mcrcon by Tiiffi, which is licensed under the zlib License.
-You can find mcrcon here: https://github.com/Tiiffi/mcrcon
+- **flask-socketio** — *MIT License*  
+  https://github.com/miguelgrinberg/flask-socketio
 
-Thank you to the original author for providing this useful library.
+- **gevent** — *MIT License*  
+  http://www.gevent.org
 
 ---
 
 ## License
-MIT License — see LICENSE file for details.
 
-
-
-
-
-
-
-
+MIT License — see [LICENSE](LICENSE) file for details.
