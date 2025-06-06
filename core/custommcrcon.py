@@ -12,7 +12,7 @@ class RCONClient:
         self.server_online = False
 
     def check_server_online(self):
-        from .servermanager import server_manager
+        from core.servermanager import server_manager
         self.server_online = server_manager.check_server_online()
         return self.server_online
 

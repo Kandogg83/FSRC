@@ -1,3 +1,9 @@
+###           ###
+# Version 1.1.1 #
+###           ###
+
+from version import __version__
+
 from gevent import monkey
 monkey.patch_all()
 
@@ -33,6 +39,10 @@ def dashboard():
     server_online = manager.web_check_server_online()
     players = manager.get_online_players()
     return render_template("dashboard.html", server_online=server_online, players=players)
+
+@app.route("/version")
+def send_current_verison():
+    return __version__
 
 @app.route("/start-server", methods={"POST"})
 def start_server():
@@ -84,4 +94,4 @@ new_thread = Thread(target=check_log_for_updates, daemon=True)
 new_thread.start()
 
 if __name__ == "__main__":
-   socketio.run(app, host="0.0.0.0", port=5000)
+   socketio.run(app, host="0.0.0.0", port=5000, debug=True, allow_unsafe_werkzeug=True)

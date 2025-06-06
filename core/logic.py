@@ -1,3 +1,4 @@
+import version
 import argparse
 from core.servermanager import server_manager
 

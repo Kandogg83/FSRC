@@ -11,28 +11,58 @@ h1 {
     color: #f4a300;
 }
 
+hr {
+    background-color: #5e5e5e;
+    height: 1px;
+    border: None;
+
+}
+.version {
+    font-size: 11px;
+    margin-top: 10px;
+    text-align: right;
+}
 .controls {
     text-align: center;
     margin: 20px 0;
 }
 
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-track {
+    background: #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #f4a300;
+    border-radius: 6px;
+    border: 2px solid #2a2a2a;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #d48f00;
+}
+
 .btn {
-    background-color: #333;
+    background-color: #2a2a2a;
     border: 2px solid #f4a300;
     color: #f4a300;
     padding: 10px 20px;
     margin: 10px;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .btn:hover {
-    background-color: #444;
+    background-color: #3a3a3a;
 }
 
 .players-container {
     margin-top: 10px;
-    display: block;
 }
 
 .status-container {
@@ -61,8 +91,42 @@ h1 {
     background-color: red;
 }
 
-.log-container {
+.tabs {
+    display: flex;
     margin-top: 20px;
+}
+
+.tab-button {
+    background-color: #2a2a2a;
+    border: 1px solid #555;
+    border-bottom: none; /* wird überschrieben, wenn nicht aktiv */
+    color: #f4a300;
+    padding: 8px 16px;
+    margin: 0 5px 0 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+    position: relative;
+    top: 2px; /* hebt Button leicht an */
+}
+
+.tab-button:hover {
+    background-color: #3a3a3a;
+}
+
+.tab-button.active {
+    background-color: #111;
+    color: #f4a300;
+    border-bottom: 1px solid #111; /* optisch mit log-container verbunden */
+    z-index: 2;
+}
+
+.log-container {
+    z-index: 1;
+    position: relative;
+    margin-top: -2px; /* optional – hebt das nahtlose Gefühl */
     background-color: #111;
     border: 1px solid #555;
     padding: 10px;
@@ -70,21 +134,41 @@ h1 {
     overflow-y: scroll;
     overflow-x: auto;
     font-size: 14px;
-    white-space: pre;
+    white-space: pre-wrap;
     scroll-behavior: smooth;
+    color: #f4a300;
 }
 
 .mod-container {
     background-color: #111;
     border: 1px solid #555;
     padding: 10px;
-    height: 300px;
+    height: 200px;
     font-size: 14px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: flex-start;
     overflow-x: auto;
+    color: #f4a300;
+}
+
+.log-entry {
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    border-bottom: 1px solid #333;
+}
+
+.log-entry.info {
+    color: #47b8e0;
+}
+
+.log-entry.warning {
+    color: #ff6b6b;
+}
+
+.log-entry.user {
+    color: #4cd964;
 }
 
 .mod {
@@ -92,12 +176,59 @@ h1 {
 }
 
 .mod-underscore {
-    color: saddlebrown;
+    color: #c97b33;
 }
+
 .mod-version {
     color: #e47b53;
 }
 
 .mod-table td {
     padding-top: 5px;
+}
+
+.rcon-input-container {
+    margin-top: 0;
+    padding: 10px;
+    background-color: #111;
+    border: 1px solid #555;
+    color: #f4a300;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+
+.rcon-input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+#rcon-input {
+    flex: 1;
+    padding: 8px 10px;
+    font-size: 14px;
+    background-color: #1e1e1e;
+    color: #f4a300;
+    border: 1px solid #555;
+    font-family: 'Courier New', Courier, monospace;
+    outline: none;
+}
+
+.enter-btn {
+    border: 1px solid #555;
+    background-color: #2a2a2a;
+    color: #f4a300;
+    border-radius: 0;
+    padding: 8px 60px 9px 60px;
+    border-left: None;
+    margin: 0;
+}
+
+.enter-btn:hover {
+    background-color: #3a3a3a;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.enter-btn:active {
+    background-color: #4a4a4a;
 }

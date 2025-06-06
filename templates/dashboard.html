@@ -28,7 +28,23 @@
 </div>
 
 <div class="mod-container" id="mod-list"></div>
+<div class="tabs">
+  <button class="tab-button">All</button>
+  <button class="tab-button">User</button>
+  <button class="tab-button">Warnings</button>
+  <button class="tab-button">Info</button>
+</div>
 <div class="log-container" id="log-output"></div>
+
+
+  <div class="rcon-input-wrapper">
+    <input type="text" id="rcon-input" placeholder="Enter RCON command here..." />
+    <button class="enter-btn">Enter</button>
+  </div>
+<hr>
+<footer>
+  <div id="version" class="version">Version : 1.1.1</div>
+</footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.1/socket.io.min.js"></script>
 <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </body>
