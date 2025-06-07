@@ -19,13 +19,13 @@ class RCONClient:
     def connect(self):
 
         if self.mcr and  self.server_online:
-            return
+            return True
 
         self.mcr = None
         self.check_server_online()
 
         if not self.check_server_online():
-            return
+            return False
 
         attempt = 1
         max_attemps = 4
@@ -34,7 +34,7 @@ class RCONClient:
                 self.mcr = MCRcon(CONFIG["server_ip"], CONFIG["rcon_password"], port=27015)
                 self.mcr.connect()
                 self.event_logger.info("✅ RCON Connection established")
-                return
+                return True
 
             except ConnectionRefusedError as e:
                 attempt += 1
@@ -65,7 +65,8 @@ class RCONClient:
 
     def send(self, cmd):
         if not self.mcr:
-            self.connect()
+            if not self.connect():
+                return None
         if not self.mcr:
             return None
 

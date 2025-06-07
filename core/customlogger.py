@@ -1,4 +1,5 @@
 from core.helpers import get_local_path
+from re import match
 import logging
 
 
@@ -55,6 +56,7 @@ class ScriptLogger:
             if return_binary:
                 return new_content
             else:
+                print(new_content)
                 return new_content.decode("utf-8")
         else:
             return ""

@@ -1,4 +1,9 @@
 # CHANGELOG FSRC
+---
+## [1.1.1] - 2025-06.01
+### Added / Changed / Improved
+- included versioning
+- WebUI : filter tabs for log (not yet functional)
 
 ---
 ## [1.1] - 2025-06.01

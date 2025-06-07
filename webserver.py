@@ -74,7 +74,8 @@ def send_log(log=None):
         new = True
     else:
         new = False
-    data = {"log": log, "new": new}
+    sep_log = seperate_log_entries(log)
+    data = {"log": sep_log, "new": new}
     socketio.emit("log_entry", data)
 
 @socketio.on("mod_list")
@@ -89,6 +90,22 @@ def check_log_for_updates():
             current_log = latest_log
             send_log(current_log.decode("utf-8"))
         time.sleep(2)
+
+def seperate_log_entries(data):
+
+    log_lines = data.splitlines()
+    logs = {"all": data,
+            "info": "",
+            "warning": "",
+            "user": "" }
+    for line in log_lines:
+        if "INFO" in line:
+            logs["info"] += line +"\n"
+        if "ERROR" in line:
+            logs["warning"] += line + "\n"
+    print("LOGS: ", logs["warning"])
+    return logs
+
 
 new_thread = Thread(target=check_log_for_updates, daemon=True)
 new_thread.start()

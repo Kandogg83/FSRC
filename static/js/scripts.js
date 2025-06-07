@@ -1,4 +1,9 @@
 const socket = io();
+let infolog = ""
+let warninglog = ""
+let alllog = ""
+let activeLogFilter = "all"
+
 
 socket.on("connect", () => {
     console.log("Connected! to Socket...");
@@ -8,10 +13,24 @@ socket.on("log_entry", (data) => {
     const container = document.getElementById("log-output");
     if (data.new === true) {
         container.innerHTML = ""
+        infolog = ""
+        warninglog = ""
+        alllog = ""
     }
-    container.innerHTML += data.log
-    container.scrollTop = container.scrollHeight;
 
+    infolog += data.log.info
+    warninglog += data.log.warning
+    alllog += data.log.all
+
+    switch (activeLogFilter) {
+        case "all": container.innerHTML += data.log.all;
+            break;
+        case "warning": container.innerHTML += data.log.warning;
+            break;
+        case "info": container.innerHTML += data.log.info;
+            break;
+    }
+    container.scrollTop = container.scrollHeight;
 })
 
 socket.on("mod_list", (data) => {
@@ -97,7 +116,39 @@ function populate_players(players) {
     }
 }
 
+window.onclick = function (e) {
+    const target = e.target;
+    if (target.classList.contains("tab-button")) {
+        document.querySelectorAll(".tab-button").forEach(el => {
+            el.classList.remove("active");
+            target.classList.add("active");
+        })
+    }
+}
+
+function filterLog(filter) {
+    document.getElementById("log-output").innerHTML = "";
+    let content  = ""
+    activeLogFilter = filter;
+    switch (filter) {
+        case "all":
+            content = alllog;
+            break;
+        case "info":
+            content = infolog;
+            break;
+        case "warning":
+            content = warninglog;
+            break;
+    }
+    document.getElementById("log-output").innerHTML = content;
+}
+
+
+
+
 window.onload = function(){
     startPolling(5000)
 }
+
 

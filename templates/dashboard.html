@@ -29,10 +29,10 @@
 
 <div class="mod-container" id="mod-list"></div>
 <div class="tabs">
-  <button class="tab-button">All</button>
-  <button class="tab-button">User</button>
-  <button class="tab-button">Warnings</button>
-  <button class="tab-button">Info</button>
+  <button class="tab-button active" id="tab-all" onclick="filterLog('all')">All</button>
+  <button class="tab-button" id="tab-user" onclick="filterLog('user')">User</button>
+  <button class="tab-button" id="tab-warnings" onclick="filterLog('warning')">Warnings</button>
+  <button class="tab-button" id="tab-info" onclick="filterLog('info')">Info</button>
 </div>
 <div class="log-container" id="log-output"></div>
 

@@ -121,6 +121,7 @@ hr {
     color: #f4a300;
     border-bottom: 1px solid #111; /* optisch mit log-container verbunden */
     z-index: 2;
+    margin-bottom: 2px;
 }
 
 .log-container {
